@@ -55,6 +55,7 @@ pipeline {
               sh "make tag"
             }
           }
+		  dir ('./Frontend') {
           container('nodejs') {
             sh "npm install"
             sh "CI=true DISPLAY=:99 npm test"
@@ -63,6 +64,7 @@ pipeline {
 
             sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
           }
+		  }
         }
       }
       stage('Promote to Environments') {
